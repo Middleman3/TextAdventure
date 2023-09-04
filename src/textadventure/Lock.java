@@ -1,4 +1,3 @@
-
 package textadventure;
 
 import static textadventure.TextAdventure.print;
@@ -50,15 +49,40 @@ public class Lock
 class CombinationLock extends Lock 
 {
     private String combination;
+    public int pickCombDC, breakCombDC;
   
-    public CombinationLock(String description, String combination) {
+    public CombinationLock(String description, String combination, int pickCombDC, int breakCombDC) {
         super(description, 0, 0);
         this.combination = combination;
+        this.pickCombDC = pickCombDC;
+        this.breakCombDC = breakCombDC;
     }
    
     @Override
     public boolean unlock(Creature creature) { 
         return false;
+    }
+
+    @Override
+    public boolean pick(int check) {  
+        if (check >= pickCombDC)
+        {
+            parent.locked = false;
+            print("You've picked the combination lock!");
+            return true;
+        }
+        return false;
+    }   
+
+    @Override
+    public boolean ruin(int check) { 
+        if (check >= breakCombDC)
+        {
+            parent.locked = false;
+            print("You've broke the combination lock!");
+            return true;
+        }
+        return false; 
     }
     
     public boolean unlockWithCombination(String inputCombination) {
