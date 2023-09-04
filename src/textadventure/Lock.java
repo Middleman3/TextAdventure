@@ -1,3 +1,4 @@
+
 package textadventure;
 
 import static textadventure.TextAdventure.print;
@@ -44,4 +45,30 @@ public class Lock
 		}
 		return false; 
 	}
+}
+
+class CombinationLock extends Lock 
+{
+    private String combination;
+  
+    public CombinationLock(String description, String combination) {
+        super(description, 0, 0);
+        this.combination = combination;
+    }
+   
+    @Override
+    public boolean unlock(Creature creature) { 
+        return false;
+    }
+    
+    public boolean unlockWithCombination(String inputCombination) {
+        if (this.combination.equals(inputCombination)) {
+            this.parent.locked = false;
+            print("The lock clicks open!");
+            return true;
+        }
+       
+        print("The lock stays firmly shut.");
+        return false;
+    }
 }
